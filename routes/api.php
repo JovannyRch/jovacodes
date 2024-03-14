@@ -11,3 +11,4 @@ Route::get('/user', function (Request $request) {
 
 //get /pdf
 Route::get('/pdf', [PdfController::class, 'generatePDF']);
+Route::get('/pdf/test', [PdfController::class, 'testView']);
