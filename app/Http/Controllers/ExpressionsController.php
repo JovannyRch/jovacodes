@@ -35,7 +35,8 @@ class ExpressionsController extends Controller
     //List in view
     public function list()
     {
-        $expressions = Expression::all();
+        //Get all expressions order by count
+        $expressions = Expression::orderBy('count', 'desc')->get();
         return view('expressions', ['expressions' => $expressions]);
     }
 }

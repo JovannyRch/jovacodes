@@ -35,6 +35,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Count
                             </th>
+                            <th>
+                                Actions
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +54,9 @@
                                 </td>
                                 <td class="px-6 py-3">
                                     {{ $item['count'] }}
+                                </td>
+                                <td>
+
                                 </td>
                             </tr>
                         @endforeach
