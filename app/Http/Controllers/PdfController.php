@@ -7,7 +7,6 @@ use PDF;
 
 class PdfController extends Controller
 {
-    //generatePDF
     public function generatePDF()
     {
         $pdf = PDF::loadView('sample');
