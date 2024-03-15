@@ -31,4 +31,11 @@ class ExpressionsController extends Controller
         $expresion->save();
         return response()->json($expresion);
     }
+
+    //List in view
+    public function list()
+    {
+        $expressions = Expression::all();
+        return view('expressions', ['expressions' => $expressions]);
+    }
 }
