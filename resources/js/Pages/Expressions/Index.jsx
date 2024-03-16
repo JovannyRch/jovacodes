@@ -66,7 +66,6 @@ export default function Index({ auth, expressions }) {
                                                                     Edit
                                                                 </a>
 
-                                                                {/* If has youtube_url */}
                                                                 {expression.youtube_url &&
                                                                     <div class="bg-orange-500 rounded p-2 cursor-pointer"
                                                                         onClick={() => window.open(expression.youtube_url)}
