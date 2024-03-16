@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExpressionsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +16,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/expressions', [ExpressionsController::class, 'index'])->middleware(['auth', 'verified'])->name('expressions');
+Route::get('/expressions/{id}/edit', [ExpressionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('expressions.edit');
+//Update
+Route::patch('/expressions/{id}', [ExpressionsController::class, 'update'])->middleware(['auth', 'verified'])->name('expressions.update');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
