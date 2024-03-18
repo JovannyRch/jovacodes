@@ -15,3 +15,4 @@ Route::get('/pdf/test', [PdfController::class, 'testView']);
 
 
 Route::post('/expression', [ExpressionsApiController::class, 'create']);
+Route::delete('/expression/{id}', [ExpressionsApiController::class, 'destroy'])->name('expression.destroy');

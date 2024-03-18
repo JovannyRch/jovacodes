@@ -29,6 +29,12 @@ export default function Index({ auth, expression }) {
     }
 
 
+    //Handle confirm delete
+    function onConfirmDelete() {
+        if (confirm('Are you sure you want to delete this expression?')) {
+            router.delete(route('expressions.destroy', expression.id))
+        }
+    }
 
 
     return (
@@ -52,10 +58,10 @@ export default function Index({ auth, expression }) {
                                 <select className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="type" id="type"
 
                                     onChange={handleChange}
-                                    value={values.type}
+                                    value={values.type ?? ''}
                                 >
                                     {types.map((type) => (
-                                        <option value={type} selected={values.type === type}>{type}</option>
+                                        <option value={type} key={type}>{type}</option>
                                     ))}
                                 </select>
 
@@ -89,17 +95,17 @@ export default function Index({ auth, expression }) {
                                                 id="youtube_url"
                                                 name="youtube_url"
                                                 className="flex-1 shadow-sm focus:ring-primary focus:border-primary mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                defaultValue={expression.youtube_url}
+
                                                 value={values.youtube_url}
                                                 onChange={handleChange}
                                             />
 
                                             {
-                                                expression.youtube_url && <div class="bg-orange-500 rounded p-2 cursor-pointer mt-1"
+                                                expression.youtube_url && <div className="bg-orange-500 rounded p-2 cursor-pointer mt-1"
                                                     onClick={() => window.open(expression.youtube_url)}
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-4 h-4">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="w-4 h-4">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
                                                     </svg>
 
                                                 </div>
@@ -108,13 +114,21 @@ export default function Index({ auth, expression }) {
                                     </div>
                                 </div>
 
-                                <div className="mt-4">
+                                <div className="mt-4 flex gap-2">
 
 
-                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                         Save
                                     </button>
 
+                                    <button type="button" onClick={onConfirmDelete} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                        Delete
+                                    </button>
+
+
+                                    <button type="button" onClick={() => router.back()} className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                                        Cancel
+                                    </button>
 
 
                                 </div>

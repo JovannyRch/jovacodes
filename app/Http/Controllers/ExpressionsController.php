@@ -10,7 +10,7 @@ class ExpressionsController extends Controller
 {
     public function index()
     {
-        $expressions = Expression::orderBy('count', 'desc')->paginate(10);
+        $expressions = Expression::orderBy('count', 'desc')->paginate(20);
         return Inertia::render('Expressions/Index', ['expressions' => $expressions]);
     }
 
@@ -20,7 +20,6 @@ class ExpressionsController extends Controller
         return Inertia::render('Expressions/Edit', ['expression' => $expression]);
     }
 
-    //Update
     public function update(Request $request)
     {
         $expression = Expression::find($request->id);
@@ -29,6 +28,20 @@ class ExpressionsController extends Controller
         $expression->youtube_url = $request->youtube_url;
 
         $expression->save();
+        return redirect()->route('expressions');
+    }
+
+
+    public function solve(Request $request)
+    {
+        $expression = Expression::find($request->id);
+        return Inertia::render('Expressions/Solve', ['expression' => $expression]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $expression = Expression::find($request->id);
+        $expression->delete();
         return redirect()->route('expressions');
     }
 }

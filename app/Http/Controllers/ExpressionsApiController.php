@@ -32,11 +32,17 @@ class ExpressionsApiController extends Controller
         return response()->json($expresion);
     }
 
-    //List in view
     public function list()
     {
-        //Get all expressions order by count
         $expressions = Expression::orderBy('count', 'desc')->get();
         return view('expressions', ['expressions' => $expressions]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $expression = Expression::find($request->id);
+        $expression->delete();
+
+        return response()->json(['message' => 'Expression deleted']);
     }
 }

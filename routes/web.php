@@ -17,10 +17,16 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/expressions', [ExpressionsController::class, 'index'])->middleware(['auth', 'verified'])->name('expressions');
 Route::get('/expressions/{id}/edit', [ExpressionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('expressions.edit');
-//Update
 Route::patch('/expressions/{id}', [ExpressionsController::class, 'update'])->middleware(['auth', 'verified'])->name('expressions.update');
+Route::delete('/expressions/{id}', [ExpressionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('expressions.destroy');
+
+
+Route::get('/solve/{id}', [ExpressionsController::class, 'solve'])->middleware(['auth', 'verified'])->name('expressions.solve');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

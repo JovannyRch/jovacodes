@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useMemo } from 'react';
 import { kMainColor, kMainColor30 } from '@/Helpers/const';
+import { formatNumber } from '@/Helpers/formatNumber';
 
 
 
@@ -16,16 +17,15 @@ const options = {
 };
 
 
-export default function Dashboard({ auth, expressions }) {
+export default function Dashboard({ auth, expressions, sum_of_expressions: sumOfExpressions, average, }) {
 
 
     const data = useMemo(() => {
-        console.log("expressions", expressions);
         return {
             labels: expressions.map((expression) => expression.date),
             datasets: [
                 {
-                    label: 'Cantidad de llamados',
+                    label: 'Calculations per day',
                     data: expressions.map((expression) => expression.total),
                     fill: false,
                     backgroundColor: kMainColor,
@@ -56,8 +56,41 @@ export default function Dashboard({ auth, expressions }) {
                             </div>
 
                         </div>
+                        <hr className="my-8" />
+
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="p-6 text-gray-900">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                        <div className="p-6 text-gray-900">
+                                            <h3 className="text-xl font-bold mb-4">
+                                                Total calculations
+                                            </h3>
+                                            <p className="text-4xl font-bold text-center">
+                                                {formatNumber(sumOfExpressions)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                        <div className="p-6 text-gray-900">
+                                            <h3 className="text-xl font-bold mb-4">
+                                                Average calculations per day
+                                            </h3>
+                                            <p className="text-4xl font-bold text-center">
+                                                {formatNumber(average)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
+
+
                 </div>
+
             </div>
         </AuthenticatedLayout>
     );
