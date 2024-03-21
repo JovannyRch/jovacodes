@@ -54,10 +54,10 @@ export default function Index({ auth, expression }) {
     }, [])
 
     useEffect(() => {
-        if (step === 4) {
+        if (step === 5) {
             handleCalculateRows()
         }
-        if (step < 4) {
+        if (step < 5) {
             setTotalRows('')
         }
     }, [step])

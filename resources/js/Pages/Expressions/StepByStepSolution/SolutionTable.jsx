@@ -73,8 +73,8 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
 
                         {
                             variables.map((variable, index) => {
-                                return <th key={index} className="px-6 py-3 font-bold text-center border font-xl whitespace-nowrap ">
-                                    <div className="text-4xl lowercase">
+                                return <th key={index} className="px-6 py-3 font-bold text-center border font-xl whitespace-nowrap w-[69px]">
+                                    <div className="text-3xl lowercase w-[69px]">
                                         {variable}
                                     </div>
                                 </th>
@@ -85,14 +85,14 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
                             showSteps && <>
                                 {
                                     Array.from({ length: t.steps.length }, (_, index) => {
-                                        return <th key={index} className="px-6 py-3 mx-auto font-bold text-center lowercase border cursor-pointer font-2xl "
+                                        return <th key={index} className="px-6 py-3 mx-auto font-bold text-center lowercase border cursor-pointer font-2xl h-[20px]"
                                             onClick={(e) => {
                                                 if (e.target.tagName === 'TH') {
                                                     handleClickOnStep(t.steps[index])
                                                 }
                                             }}
                                         >
-                                            <input className="block text-2xl text-center text-gray-900 border-gray-300 border-none rounded-lg cursor-hide bg-gray-50 focus:ring-blue-500 focus:border-blue-500" />
+                                            <input className="block text-xl w-[200px] text-center text-gray-900 border-gray-300 border-none rounded-lg cursor-hide bg-gray-50 focus:ring-blue-500 focus:border-blue-500" />
                                         </th>
                                     })
                                 }
@@ -113,7 +113,7 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
                                 {
                                     variables.map((variable, index) => {
                                         return <td className={`px-6 py-4 text-center border-x font-bold`} key={`${variable}-${rowIndex} `}>
-                                            <div className={`min-h-[25px] text-4xl ${(index + 1) === indexVariable ? getValueColor(t.columns[variable][rowIndex]) + ' text-2xl font-bold' : ''}`}>
+                                            <div className={`h-[20px] text-3xl ${(index + 1) === indexVariable ? getValueColor(t.columns[variable][rowIndex]) + ' text-2xl font-bold' : ''}`}>
                                                 {
                                                     indexVariable <= (index + 1) ? formatValue(t.columns[variable][rowIndex]) : ' '
                                                 }
@@ -129,12 +129,14 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
                                                 return <th key={index} className="px-6 py-3 font-bold text-center border font-2xl whitespace-nowrap ">
                                                     <div className='min-h-[25px] text-4xl '>
 
-                                                        <input
-                                                            onFocus={(e) => {
-                                                                e.target.value = formatValue(t.columns[t.steps[index].toString()][rowIndex])
+                                                        <div
+                                                            onClick={(e) => {
+                                                                e.target.innerHTML = formatValue(t.columns[t.steps[index].toString()][rowIndex])
                                                             }}
+                                                            className=" w-[200px] h-[40px] text-3xl text-center border-0 border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center cursor-pointer focus:ring-blue-500 focus:border-blue-500"
+                                                        >
 
-                                                            className="block text-2xl text-center text-gray-900 border-0 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" />
+                                                        </div>
                                                     </div>
                                                 </th>
                                             })
