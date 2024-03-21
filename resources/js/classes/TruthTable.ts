@@ -259,6 +259,7 @@ export class TruthTable {
         }
 
         const totalCombinations: number = Math.pow(2, this.variables.length);
+
         const sizeOfCombinations: number = (totalCombinations - 1).toString(
             2
         ).length;

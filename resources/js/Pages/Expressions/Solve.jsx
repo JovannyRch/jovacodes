@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import VariablesCard from './StepByStepSolution/VariablesCard';
 import SolutionTable from './StepByStepSolution/SolutionTable';
 
-const operators = ['()', '¬ ~', '∧', '∨', '→', '↔']
+const operators = ['()', '¬ ~ : Negación', '∧ : Conjunción', '∨ : Disyunción', '→ : Implicación', '↔ : Doble implicación']
 
 export default function Index({ auth, expression }) {
 
@@ -106,14 +106,14 @@ export default function Index({ auth, expression }) {
                     </div>
 
 
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
 
                             <tbody>
                                 {
-                                    operators.map((operator, index) => (<tr key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                    operators.map((operator, index) => (<tr key={index} className="border-b odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700">
                                         {
-                                            <td class="px-6 py-4 text-center text-3xl">
+                                            <td className="px-6 py-4 text-3xl text-center">
                                                 {operator}
                                             </td>
                                         }

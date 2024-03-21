@@ -36,19 +36,32 @@ export default function Index({ auth, expression }) {
         }
     }
 
+    if (!expression) {
+        return (
+            <AuthenticatedLayout
+                user={auth.user}
+                header={<h2 className="text-xl font-semibold leading-tight text-gray-800">
+                    Loading...
+                </h2>}
+            >
+                <Head title="Loading..." />
+            </AuthenticatedLayout>
+        )
+    }
+
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">
                 {expression.expression}
             </h2>}
         >
             <Head title={expression.expression} />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
 
                             <form onSubmit={handleSubmit}>
@@ -77,7 +90,7 @@ export default function Index({ auth, expression }) {
                                             type="number"
                                             id="count"
                                             name="count"
-                                            className="shadow-sm focus:ring-primary focus:border-primary mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                                            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                                             onChange={handleChange}
                                             value={values.count}
                                         />
@@ -94,14 +107,14 @@ export default function Index({ auth, expression }) {
                                                 type="text"
                                                 id="youtube_url"
                                                 name="youtube_url"
-                                                className="flex-1 shadow-sm focus:ring-primary focus:border-primary mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                className="flex-1 block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
 
                                                 value={values.youtube_url}
                                                 onChange={handleChange}
                                             />
 
                                             {
-                                                expression.youtube_url && <div className="bg-orange-500 rounded p-2 cursor-pointer mt-1"
+                                                expression.youtube_url && <div className="p-2 mt-1 bg-orange-500 rounded cursor-pointer"
                                                     onClick={() => window.open(expression.youtube_url)}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="w-4 h-4">
@@ -114,7 +127,7 @@ export default function Index({ auth, expression }) {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 flex gap-2">
+                                <div className="flex gap-2 mt-4">
 
 
                                     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">

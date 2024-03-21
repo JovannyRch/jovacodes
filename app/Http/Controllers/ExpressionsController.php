@@ -10,7 +10,7 @@ class ExpressionsController extends Controller
 {
     public function index()
     {
-        $expressions = Expression::orderBy('count', 'desc')->paginate(20);
+        $expressions = Expression::orderBy('count', 'desc')->paginate(50);
         return Inertia::render('Expressions/Index', ['expressions' => $expressions]);
     }
 

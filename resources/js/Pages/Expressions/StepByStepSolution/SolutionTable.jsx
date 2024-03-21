@@ -57,8 +57,8 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
 
                         {
                             variables.map((variable, index) => {
-                                return <th key={index} className="px-6 py-3 font-bold text-center lowercase border font-xl whitespace-nowrap ">
-                                    <div className="text-4xl">
+                                return <th key={index} className="px-6 py-3 font-bold text-center border font-xl whitespace-nowrap ">
+                                    <div className="text-4xl lowercase">
                                         {variable}
                                     </div>
                                 </th>
@@ -187,7 +187,7 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
                         </thead>
                         <tbody>
                             {
-                                Array.from({ length: Math.pow(exampleResults.variables.length, 2) }, (_, rowIndex) => {
+                                Array.from({ length: Math.pow(2, exampleResults.variables.length) }, (_, rowIndex) => {
                                     return <tr className="bg-white border-b " key={rowIndex}>
 
                                         {
