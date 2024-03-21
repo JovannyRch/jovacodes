@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ExpressionsApiController;
-use App\Http\Controllers\PdfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,9 +9,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/pdf', [PdfController::class, 'generatePDF']);
-Route::get('/pdf/test', [PdfController::class, 'testView']);
-
 
 Route::post('/expression', [ExpressionsApiController::class, 'create']);
 Route::delete('/expression/{id}', [ExpressionsApiController::class, 'destroy'])->name('expression.destroy');
+
+Route::get('/expressions/videos', [ExpressionsApiController::class, 'getVideos'])->name('expression.getVideos');
+Route::get('/expressions/{type}', [ExpressionsApiController::class, 'getByType'])->name('expression.getByType');
+Route::get('/expressions', [ExpressionsApiController::class, 'list'])->name('expression.list');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Expression;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -43,5 +44,12 @@ class ExpressionsController extends Controller
         $expression = Expression::find($request->id);
         $expression->delete();
         return redirect()->route('expressions');
+    }
+
+    public function createPdf(Request $request)
+    {
+        $expression = Expression::find($request->id);
+        $pdf = PDF::loadView('truth_table_pdf_template', ['expressions' => [$expression]]);
+        return $pdf->stream();
     }
 }

@@ -9,7 +9,8 @@ class ExpressionsApiController extends Controller
 {
     public function create(Request $request)
     {
-        $expresion = Expression::where('expression', $request->expression)->first();
+        $expressionInLowerCase = strtolower($request->expression);
+        $expresion = Expression::where('expression', $expressionInLowerCase)->first();
         if ($expresion) {
             $expresion->count = $expresion->count + 1;
             $expresion->save();
@@ -23,7 +24,7 @@ class ExpressionsApiController extends Controller
         }
 
         $expresion = new Expression();
-        $expresion->expression = $request->expression;
+        $expresion->expression = $expressionInLowerCase;
         $expresion->type = $request->type;
         $expresion->youtube_url = $request->youtube_url;
         $expresion->origin = $request->origin;
@@ -34,8 +35,8 @@ class ExpressionsApiController extends Controller
 
     public function list()
     {
-        $expressions = Expression::orderBy('count', 'desc')->get();
-        return view('expressions', ['expressions' => $expressions]);
+        $expressions = Expression::orderBy('count', 'desc')->paginate(50);
+        return response()->json($expressions);
     }
 
     public function destroy(Request $request)
@@ -44,5 +45,22 @@ class ExpressionsApiController extends Controller
         $expression->delete();
 
         return response()->json(['message' => 'Expression deleted']);
+    }
+
+    public function getVideos()
+    {
+        $expressions = Expression::where('youtube_url', '!=', '')->orderBy('count', 'desc')->get();
+        return response()->json($expressions);
+    }
+
+    public function getByType(Request $request)
+    {
+        if (!in_array($request->type, ['Contingency', 'Contradiction', 'Tautology'])) {
+            return response()->json([]);
+        }
+
+
+        $expressions = Expression::where('type', $request->type)->orderBy('count', 'desc')->get();
+        return response()->json($expressions);
     }
 }

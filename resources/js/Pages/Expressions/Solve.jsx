@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import VariablesCard from './StepByStepSolution/VariablesCard';
 import SolutionTable from './StepByStepSolution/SolutionTable';
 
-const operators = ['()', '¬ ~ : Negación', '∧ : Conjunción', '∨ : Disyunción', '→ : Implicación', '↔ : Doble implicación']
+const operators = ['() : Paréntesis', '¬ ~ : Negación', '∧ : Conjunción', '∨ : Disyunción', '→ : Implicación', '↔ : Doble implicación']
 
 export default function Index({ auth, expression }) {
 
@@ -76,27 +76,31 @@ export default function Index({ auth, expression }) {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg min-h-[80vh]">
-                        <div className="p-6 text-gray-900">
+                        <div className={`p-6 text-gray-900 ${step === 0 ? 'flex justify-center items-center h-[50vh]' : ''}`}    >
 
-                            <h2 className="pl-10 mb-10 text-6xl font-bold leading-tight text-center text-gray-800">
-                                {expression.expression}
-                            </h2>
 
-                            <RowInfo title="Proposiciones" value={t.variables.join(', ')} show={step >= 1 && step <= 4} />
-                            <RowInfo title="n=" value={t.variables.length} show={step >= 2 && step <= 4} />
-                            <VariablesCard title="T. de filas" n={t.variables.length} value={totalRows} show={step >= 3 && step <= 4} onChange={handleCalculateRows}
+
+
+                            {
+                                step < (9 + t.variables.length) && <h2 className={`pl-10 mb-10 text-6xl font-bold leading-tight text-center text-gray-800 ${step === 0 ? 'h-[150px] text-[200px]' : ''}`}>
+                                    {expression.expression}
+                                </h2>
+                            }
+                            <RowInfo title="Proposiciones" value={t.variables.join(', ')} show={step >= 2 && step <= 5} />
+                            <RowInfo title="n=" value={t.variables.length} show={step >= 3 && step <= 5} />
+                            <VariablesCard title="T. de filas" n={t.variables.length} value={totalRows} show={step >= 4 && step <= 5} onChange={handleCalculateRows}
 
                             />
 
-                            {step >= 5 && totalRows && <SolutionTable t={t} step={step} n={totalRows} variables={t.variables} />}
+                            {step >= 6 && totalRows && <SolutionTable t={t} step={step} n={totalRows} variables={t.variables} />}
 
                         </div>
                     </div>
                 </div>
             </div>
 
-            <dialog id="my_modal_2" className="modal">
-                <div className="modal-box">
+            <dialog id="my_modal_2" className="modal ">
+                <div className="modal-box dark:bg-white">
 
                     <div className="flex flex-col items-center justify-between mb-4 ">
                         <div className="w-full text-2xl font-bold text-center text-gray-800">
@@ -107,11 +111,11 @@ export default function Index({ auth, expression }) {
 
 
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
+                        <table className="w-full text-sm text-left text-gray-500 rtl:text-right ">
 
                             <tbody>
                                 {
-                                    operators.map((operator, index) => (<tr key={index} className="border-b odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700">
+                                    operators.map((operator, index) => (<tr key={index} className="border-b odd:bg-white even:bg-gray-50 ">
                                         {
                                             <td className="px-6 py-4 text-3xl text-center">
                                                 {operator}

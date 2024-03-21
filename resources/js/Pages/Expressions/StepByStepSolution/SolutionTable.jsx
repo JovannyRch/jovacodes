@@ -18,7 +18,7 @@ const getValueColor = (value) => {
 
 
 
-const STEP_OFFSET = 6
+const STEP_OFFSET = 7
 
 const SolutionTable = ({ n, variables = [], step = 0, t }) => {
 
@@ -31,6 +31,8 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
     const indexVariable = variables.length - Math.min(variables.length, step - STEP_OFFSET)
     const stepIndex = (step - STEP_OFFSET - variables.length) + 1
 
+
+
     const showSteps = true;
 
     const handleClickOnStep = (step) => {
@@ -41,6 +43,20 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
         setExampleResults(tt)
         console.log("step", step);
         document.getElementById('my_modal_1').showModal()
+    }
+
+    if (stepIndex === 3) {
+        return (
+            <div className="flex flex-col items-center justify-center mt-6 h-[70vh] gap-10">
+                <div className="text-center">
+                    <div className="text-4xl font-bold text-gray-700">
+                        Descarga nuestra app
+                    </div>
+
+                </div>
+                <img src="/images/app_banner.png" alt="App banner" className="mt-4 w-[90%]" />
+            </div>
+        )
     }
 
 
@@ -147,7 +163,7 @@ const SolutionTable = ({ n, variables = [], step = 0, t }) => {
 
 
             <dialog id="my_modal_1" className="modal">
-                <div className="modal-box">
+                <div className="modal-box dark:bg-white">
 
                     <div className="flex flex-col items-center justify-between mb-4 ">
                         <div className="w-full text-2xl font-bold text-center text-gray-800">
