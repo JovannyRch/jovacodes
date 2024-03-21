@@ -68,7 +68,7 @@ export default function Index({ auth, expression }) {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">
-                {expression.expression}
+                {`Tablas de Verdad - Ejemplo N: ${expression.expression}`}
             </h2>}
         >
             <Head title={`Solve ${expression.expression}`} />
