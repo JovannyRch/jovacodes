@@ -57,13 +57,13 @@
         <h1 class="title">
             {{ $expression }}
         </h1>
-        <span>Proposiciones:</span> {{ $variables }} <br> <br>
+        <span>Proposiciones:</span> <b>{{ $variables }}</b> <br> <br>
         <span>Cantidad de proposiciones</span> <br>
-        <span>n = </span> {{ $n }}
+        <span>n = </span> <b>{{ $n }}</b>
         <br>
         <br>
         <span>Cantidad de filas</span> <br>
-        <div>2<sup>n</sup> = 2<sup>{{ $n }}</sup> = {{ pow(2, $n) }}</div>
+        <div>2<sup>n</sup> = 2<sup>{{ $n }}</sup> = <b>{{ pow(2, $n) }}</b></div>
         <br>
         <table>
             <thead>
@@ -84,8 +84,12 @@
             </tbody>
         </table>
 
+        <br>
+        <span>Tabla de verdad tipo:</span> <b>{{ $type }}</b>
+
+        <br>
+
         <footer>
-            {{-- Download mobile app --}}
             <p>Descarga nuestra app móvil</p>
             <a href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" target="_blank">
                 <img src="{{ public_path('images/google-play-badge.png') }}" alt="Google Play Store" width="150">

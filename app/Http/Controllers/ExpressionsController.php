@@ -63,6 +63,15 @@ class ExpressionsController extends Controller
         $headers = $table[0];
         $body = array_slice($table, 1);
 
+        $type = $request->type;
+
+        if ($type == 'Contingency') {
+            $type = 'Contingencia';
+        } else if ($type == 'Contradiction') {
+            $type = 'Contradicción';
+        } else if ($type == 'Tautology') {
+            $type = 'Tautología';
+        }
 
         $pdf = PDF::loadView(
             'truth_table_pdf_template',
@@ -70,6 +79,7 @@ class ExpressionsController extends Controller
                 'variables' => $request->variables,
                 'expression' => $request->expression,
                 'n' => $request->n,
+                'type' => $type,
                 'headers' => $headers,
                 'body' => $body
             ]
