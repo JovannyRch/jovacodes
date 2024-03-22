@@ -52,4 +52,31 @@ class ExpressionsController extends Controller
         $pdf = PDF::loadView('truth_table_pdf_template', ['expressions' => [$expression]]);
         return $pdf->stream();
     }
+
+    public function generatePdf(Request $request)
+    {
+
+        $table = $request->table;
+
+
+
+        $headers = $table[0];
+        $body = array_slice($table, 1);
+
+
+        $pdf = PDF::loadView(
+            'truth_table_pdf_template',
+            [
+                'variables' => $request->variables,
+                'expression' => $request->expression,
+                'n' => $request->n,
+                'headers' => $headers,
+                'body' => $body
+            ]
+        );
+
+
+
+        return $pdf->stream();
+    }
 }

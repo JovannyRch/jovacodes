@@ -19,8 +19,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/expressions', [ExpressionsController::class, 'index'])->middleware(['auth', 'verified'])->name('expressions');
-Route::get('/expressions/{id}/edit', [ExpressionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('expressions.edit');
-Route::get('/expressions/{id}/pdf', [ExpressionsController::class, 'createPdf'])->middleware(['auth', 'verified'])->name('expressions.pdf');
+Route::get('/expressions/{id}/details', [ExpressionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('expressions.details');
+Route::get('/expressions/pdf', [ExpressionsController::class, 'generatePdf'])->middleware(['auth', 'verified'])->name('expressions.pdf');
 Route::patch('/expressions/{id}', [ExpressionsController::class, 'update'])->middleware(['auth', 'verified'])->name('expressions.update');
 Route::delete('/expressions/{id}', [ExpressionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('expressions.destroy');
 

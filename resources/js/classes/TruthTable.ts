@@ -24,6 +24,7 @@ export class TruthTable {
     static contradictionId: number = 0;
     static tautologyId: number = 1;
     static contingencyId: number = 2;
+    finalTable = [];
 
     notOpers: string[] = [
         Operators.NOT.value,
@@ -98,6 +99,34 @@ export class TruthTable {
         if (result) {
             this.calculate();
         }
+
+        let table = [];
+        let headers = [...this.variables];
+
+        for (const step of this.steps) {
+            headers.push(
+                step.isSingleVariable
+                    ? `${step.operator.value}${step.variable1}`
+                    : `${step.variable1} ${step.operator.value} ${step.variable2}`
+            );
+        }
+
+        table.push(headers);
+
+        for (let i = 0; i < this.totalRows; i++) {
+            let row = [];
+            for (const variable of this.variables) {
+                row.push(this.columns[variable][i]);
+            }
+
+            for (const step of this.steps) {
+                row.push(this.columns[step.toString()][i]);
+            }
+
+            table.push(row);
+        }
+
+        this.finalTable = table;
         return result;
     }
 

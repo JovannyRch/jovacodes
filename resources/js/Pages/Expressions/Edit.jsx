@@ -1,12 +1,21 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { TruthTable } from '@/classes/TruthTable';
 import { Head, router } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function Index({ auth, expression }) {
 
     const [values, setValues] = useState({
         ...expression
     })
+
+    const t = useMemo(() => {
+        const tt = new TruthTable('es', expression.expression)
+        tt.init()
+        return tt;
+    })
+
+
     const types = [
         '',
         'Contingency',
@@ -36,6 +45,11 @@ export default function Index({ auth, expression }) {
         }
     }
 
+    function onGoPDF() {
+        router.get(route('expressions.pdf', { variables: t.variables }))
+    }
+
+
     if (!expression) {
         return (
             <AuthenticatedLayout
@@ -48,6 +62,9 @@ export default function Index({ auth, expression }) {
             </AuthenticatedLayout>
         )
     }
+
+
+
 
 
     return (
@@ -92,7 +109,7 @@ export default function Index({ auth, expression }) {
                                             name="count"
                                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                                             onChange={handleChange}
-                                            value={values.count}
+                                            value={values.count ?? 0}
                                         />
                                     </div>
                                 </div>
@@ -109,7 +126,7 @@ export default function Index({ auth, expression }) {
                                                 name="youtube_url"
                                                 className="flex-1 block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
 
-                                                value={values.youtube_url}
+                                                value={values.youtube_url ?? ''}
                                                 onChange={handleChange}
                                             />
 
@@ -134,6 +151,18 @@ export default function Index({ auth, expression }) {
                                         Save
                                     </button>
 
+                                    <a href={route('expressions.pdf', {
+                                        variables: t.variables.join(','),
+                                        expression: t.infix,
+                                        n: t.variables.length,
+                                        table: t.finalTable
+                                    })}
+
+                                        className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
+                                        Get PDF
+                                    </a>
+
+
                                     <button type="button" onClick={onConfirmDelete} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                         Delete
                                     </button>
@@ -151,7 +180,7 @@ export default function Index({ auth, expression }) {
                         </div>
                     </div>
                 </div>
-            </div>
-        </AuthenticatedLayout>
+            </div >
+        </AuthenticatedLayout >
     );
 }
