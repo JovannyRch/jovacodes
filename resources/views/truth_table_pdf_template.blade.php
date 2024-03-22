@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>
+        {{ $expression }} - Tabla de verdad
+    </title>
     <style>
         body {
             font-family: 'DejaVu Sans', sans-serif;
@@ -46,7 +48,12 @@
             width: 100%;
             text-align: center;
             font-size: 12px;
-            color: #777;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
     </style>
 
@@ -90,16 +97,27 @@
         <br>
 
         <footer>
-            <p>Descarga nuestra app móvil</p>
-            <a href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" target="_blank">
-                <img src="{{ public_path('images/google-play-badge.png') }}" alt="Google Play Store" width="150">
-            </a>
+            <div class="row">
+                <div>
+                    <p>Descarga nuestra app móvil</p>
+                    {{--  <a href="https://play.google.com/store/apps/details?id=com.jovannyrch.tablasdeverdad" target="_blank">
+                        <img src="{{ public_path('images/google-play-badge.png') }}" alt="Google Play Store"
+                            width="150">
+                    </a> --}}
+                </div>
+                <div>
+                    <img src="{{ public_path('images/qr.png') }}" alt="Tablas de verdad" width="75">
+                </div>
+            </div>
 
-            <p>www.tablasdeverdad.com</p>
-            <p>
 
-                &copy;
-                {{ date('Y') }}</p>
+            <div style="display: flex; justify-content: center; flex-direction: column;">
+                <p>www.tablasdeverdad.com</p>
+                <p>
+
+                    &copy;
+                    {{ date('Y') }}</p>
+            </div>
         </footer>
     </div>
 </body>

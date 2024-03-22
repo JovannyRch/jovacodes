@@ -13,7 +13,7 @@ export default function Index({ auth, expression }) {
         const tt = new TruthTable('es', expression.expression)
         tt.init()
         return tt;
-    })
+    }, [expression])
 
 
     const types = [
@@ -45,9 +45,7 @@ export default function Index({ auth, expression }) {
         }
     }
 
-    function onGoPDF() {
-        router.get(route('expressions.pdf', { variables: t.variables }))
-    }
+
 
 
     if (!expression) {
