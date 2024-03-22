@@ -20,7 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::get('/expressions', [ExpressionsController::class, 'index'])->middleware(['auth', 'verified'])->name('expressions');
 Route::get('/expressions/{id}/details', [ExpressionsController::class, 'edit'])->middleware(['auth', 'verified'])->name('expressions.details');
-Route::get('/expressions/pdf', [ExpressionsController::class, 'generatePdf'])->middleware(['auth', 'verified'])->name('expressions.pdf');
+Route::get('/expressions/pdf', [ExpressionsController::class, 'generatePdf'])->name('expressions.pdf');
 Route::patch('/expressions/{id}', [ExpressionsController::class, 'update'])->middleware(['auth', 'verified'])->name('expressions.update');
 Route::delete('/expressions/{id}', [ExpressionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('expressions.destroy');
 
