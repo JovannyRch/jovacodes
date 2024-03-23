@@ -24,7 +24,7 @@ export class TruthTable {
     static contradictionId: number = 0;
     static tautologyId: number = 1;
     static contingencyId: number = 2;
-    finalTable = [];
+    operatorsHistory: string[] = [];
 
     notOpers: string[] = [
         Operators.NOT.value,
@@ -36,6 +36,7 @@ export class TruthTable {
     orOpers: string[] = [Operators.OR.value, Operators.OR2.value];
 
     statesSteps: number[] = [];
+    finalTable: any = [];
 
     priorities: { [key: string]: number } = {
         "~": 16,
@@ -63,7 +64,6 @@ export class TruthTable {
     constructor(language: "en" | "es", infix: string) {
         this.language = language;
         this.infix = infix;
-
         this.setOperators();
     }
 
@@ -95,6 +95,7 @@ export class TruthTable {
     }
 
     init(): boolean {
+        console.clear();
         const result = this.convertInfixToPostfix();
         if (result) {
             this.calculate();
@@ -103,7 +104,11 @@ export class TruthTable {
         let table = [];
         let headers = [...this.variables];
 
+        console.log("this.operatorsHistory", this.operatorsHistory);
+
         for (const step of this.steps) {
+            console.log("step", step.operator.value);
+
             headers.push(
                 step.isSingleVariable
                     ? `${step.operator.value}${step.variable1}`
@@ -125,8 +130,8 @@ export class TruthTable {
 
             table.push(row);
         }
-
         this.finalTable = table;
+
         return result;
     }
 
@@ -135,12 +140,19 @@ export class TruthTable {
         if (this.postfix.length === 0) {
             return false;
         }
+
         return true;
     }
 
     createColumnsForVariables(): void {
         for (let i = 0; i < this.variables.length; i++) {
             this.columns[this.variables[i]] = [];
+        }
+    }
+
+    checkOperatorHistory(opStack: string[]) {
+        if (opStack.length > this.operatorsHistory.length) {
+            this.operatorsHistory = [...opStack];
         }
     }
 
@@ -157,6 +169,7 @@ export class TruthTable {
             } else if (token === "(") {
                 opStack.push(token);
             } else if (token === ")") {
+                console.log("opstack", opStack);
                 if (opStack.length === 0) {
                     this.errorMessage =
                         this.language === "en"
@@ -187,6 +200,7 @@ export class TruthTable {
                 ) {
                     postfixList.push(opStack.pop()!);
                 }
+
                 opStack.push(token);
             }
         }
