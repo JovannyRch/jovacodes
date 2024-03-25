@@ -17,7 +17,7 @@ const options = {
 };
 
 
-export default function Dashboard({ auth, expressions, sum_of_expressions: sumOfExpressions, average, }) {
+export default function Dashboard({ auth, expressions, sum_of_expressions: sumOfExpressions, average, latest_expressions }) {
 
 
     const data = useMemo(() => {
@@ -41,15 +41,15 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Dashboard</h2>}
         >
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h1 className="text-3xl font-bold mb-8">Welcome back, {auth.user.name}!</h1>
+                            <h1 className="mb-8 text-3xl font-bold">Welcome back, {auth.user.name}!</h1>
 
                             <div className=" md:max-w-[70%]  mx-auto">
                                 <Line data={data} options={options} />
@@ -58,12 +58,12 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
                         </div>
                         <hr className="my-8" />
 
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900">
-                                            <h3 className="text-xl font-bold mb-4">
+                                            <h3 className="mb-4 text-xl font-bold">
                                                 Total calculations
                                             </h3>
                                             <p className="text-4xl font-bold text-center">
@@ -71,9 +71,9 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900">
-                                            <h3 className="text-xl font-bold mb-4">
+                                            <h3 className="mb-4 text-xl font-bold">
                                                 Average calculations per day
                                             </h3>
                                             <p className="text-4xl font-bold text-center">
@@ -86,6 +86,55 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
 
 
                         </div>
+
+                        <div className="mt-8 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="p-6 text-gray-900">
+                                <h3 className="mb-4 text-xl font-bold">
+                                    Latest expressions
+                                </h3>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                    Expression
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                    Count
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                    Type
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                    Origin
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {latest_expressions.map((expression) => (
+                                                <tr key={expression.id}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <div className="text-sm text-gray-900">{expression.expression}</div>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <div className="text-sm text-gray-900">{expression.count}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="text-sm text-gray-900">{expression.type}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="text-sm text-gray-900">{expression.origin}</div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
 
 

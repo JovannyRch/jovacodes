@@ -18,11 +18,9 @@ class DashboardController extends Controller
 
         $sum_of_expressions = Expression::sum('count');
 
-        //Average per day
         $oldest_date = $expressions->first()->date;
         $newest_date = $expressions->last()->date;
 
-        //Parse to Dates
         $oldest_date = \Carbon\Carbon::parse($oldest_date);
         $newest_date = \Carbon\Carbon::parse($newest_date);
 
@@ -31,12 +29,14 @@ class DashboardController extends Controller
         $average = $sum_of_expressions / $difference;
 
 
+        $latest_expressions = Expression::orderBy('created_at', 'desc')->take(20)->get();
 
         return Inertia::render('Dashboard', [
             'expressions' => $expressions,
             'sum_of_expressions' => $sum_of_expressions,
             'average' => $average,
             'difference' => $difference,
+            'latest_expressions' => $latest_expressions
         ]);
     }
 }
