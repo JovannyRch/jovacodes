@@ -14,5 +14,5 @@ Route::post('/expression', [ExpressionsApiController::class, 'create']);
 Route::delete('/expression/{id}', [ExpressionsApiController::class, 'destroy'])->name('expression.destroy');
 
 Route::get('/expressions/videos', [ExpressionsApiController::class, 'getVideos'])->name('expression.getVideos');
-Route::get('/expressions/{type}', [ExpressionsApiController::class, 'getByType'])->name('expression.getByType');
+Route::get('/expressions/type/{type}', [ExpressionsApiController::class, 'getByType'])->name('expression.getByType');
 Route::get('/expressions', [ExpressionsApiController::class, 'list'])->name('expression.list');

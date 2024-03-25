@@ -36,6 +36,9 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
         };
     });
 
+    const formatDateWithTime = (date) => {
+        return new Date(date).toLocaleString();
+    }
 
 
     return (
@@ -108,6 +111,9 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
                                                 <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                                     Origin
                                                 </th>
+                                                <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                    Created at
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
@@ -124,6 +130,13 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
                                                     </td>
                                                     <td>
                                                         <div className="text-sm text-gray-900">{expression.origin}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="text-sm text-gray-900">
+                                                            {
+                                                                formatDateWithTime(expression.created_at)
+                                                            }
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}

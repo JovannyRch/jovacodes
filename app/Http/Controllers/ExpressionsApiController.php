@@ -35,7 +35,7 @@ class ExpressionsApiController extends Controller
 
     public function list()
     {
-        $expressions = Expression::orderBy('count', 'desc')->paginate(50);
+        $expressions = Expression::orderBy('count', 'desc')->paginate(20);
         return response()->json($expressions);
     }
 
@@ -49,7 +49,7 @@ class ExpressionsApiController extends Controller
 
     public function getVideos()
     {
-        $expressions = Expression::where('youtube_url', '!=', '')->orderBy('count', 'desc')->get();
+        $expressions = Expression::where('youtube_url', '!=', '')->orderBy('count', 'desc')->paginate(20);
         return response()->json($expressions);
     }
 
@@ -60,7 +60,7 @@ class ExpressionsApiController extends Controller
         }
 
 
-        $expressions = Expression::where('type', $request->type)->orderBy('count', 'desc')->get();
+        $expressions = Expression::where('type', $request->type)->orderBy('count', 'desc')->paginate(20);
         return response()->json($expressions);
     }
 }
