@@ -3,8 +3,9 @@ import { Head } from '@inertiajs/react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useMemo } from 'react';
-import { kMainColor, kMainColor30 } from '@/Helpers/const';
+import { COLORS, kMainColor, kMainColor30 } from '@/Helpers/const';
 import { formatNumber } from '@/Helpers/formatNumber';
+import { formatDateWithTime } from '@/Helpers/formatDateWithTime';
 
 
 
@@ -17,7 +18,8 @@ const options = {
 };
 
 
-export default function Dashboard({ auth, expressions, sum_of_expressions: sumOfExpressions, average, latest_expressions }) {
+export default function Dashboard({ auth, expressions_previous_week: expressionsPreviousWeek,
+    expressions, sum_of_expressions: sumOfExpressions, today_sum: todaySum, latest_expressions, month_sum: monthSum, count_pdf_created: countPdfCreated }) {
 
 
     const data = useMemo(() => {
@@ -25,20 +27,27 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
             labels: expressions.map((expression) => expression.date),
             datasets: [
                 {
-                    label: 'Calculations per day',
+                    label: 'Last 7 days calculations',
                     data: expressions.map((expression) => expression.total),
                     fill: false,
-                    backgroundColor: kMainColor,
-                    borderColor: kMainColor30,
+                    backgroundColor: COLORS.kMainColor,
+                    borderColor: COLORS.kMainColor80,
                     tension: 0.3,
                 },
+                {
+                    label: 'Previous 7 days calculations',
+                    data: expressionsPreviousWeek.map((expression) => expression.total),
+                    fill: false,
+                    backgroundColor: COLORS.kMainColor50,
+                    borderColor: COLORS.kMainColor30,
+                    tension: 0.3,
+                }
             ],
         };
     });
 
-    const formatDateWithTime = (date) => {
-        return new Date(date).toLocaleString();
-    }
+
+
 
 
     return (
@@ -77,13 +86,35 @@ export default function Dashboard({ auth, expressions, sum_of_expressions: sumOf
                                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900">
                                             <h3 className="mb-4 text-xl font-bold">
-                                                Average calculations per day
+                                                Today's calculations
                                             </h3>
                                             <p className="text-4xl font-bold text-center">
-                                                {formatNumber(average)}
+                                                {formatNumber(todaySum)}
                                             </p>
                                         </div>
                                     </div>
+                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                                        <div className="p-6 text-gray-900">
+                                            <h3 className="mb-4 text-xl font-bold">
+                                                This month's calculations
+                                            </h3>
+                                            <p className="text-4xl font-bold text-center">
+                                                {formatNumber(monthSum)}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                                        <div className="p-6 text-gray-900">
+                                            <h3 className="mb-4 text-xl font-bold">
+                                                PDFs created
+                                            </h3>
+                                            <p className="text-4xl font-bold text-center">
+                                                {formatNumber(countPdfCreated)}
+                                            </p>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 

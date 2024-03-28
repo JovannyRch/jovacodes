@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import Pagination from '@/Components/Pagination';
+import { formatDateWithTime } from '@/Helpers/formatDateWithTime';
 
 export default function Index({ auth, expressions }) {
 
@@ -40,6 +41,14 @@ export default function Index({ auth, expressions }) {
                                                         </th>
 
                                                         <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                            Created at
+                                                        </th>
+
+                                                        <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                                            Modified at
+                                                        </th>
+
+                                                        <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                                             Actions
                                                         </th>
                                                     </tr>
@@ -59,6 +68,21 @@ export default function Index({ auth, expressions }) {
                                                             <td>
                                                                 <div className="text-sm text-gray-900">{expression.origin}</div>
                                                             </td>
+
+                                                            <td>
+                                                                <div className="text-sm text-gray-900">
+                                                                    {formatDateWithTime(expression.created_at)}
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div className="text-sm text-gray-900">
+                                                                    {formatDateWithTime(expression.updated_at)}
+                                                                </div>
+                                                            </td>
+
+
+
                                                             <td className="flex items-center gap-2 py-2">
 
                                                                 <a

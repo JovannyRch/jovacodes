@@ -56,6 +56,10 @@ class ExpressionsController extends Controller
     public function generatePdf(Request $request)
     {
 
+
+        $logController = new LogsController();
+        $logController->createPdf($request);
+
         $table = $request->table;
 
 

@@ -3,14 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expression;
+use App\Models\Log;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $expressions = Expression::selectRaw('DATE(created_at) as date, sum(count) as total')
-            ->where('created_at', '>=', now()->subDays(7))
+
+        $today_sum = Expression::whereDate('created_at', today())->sum('count');
+        $month_sum = Expression::whereMonth('created_at', today())->sum('count');
+
+
+        $expressions_current_week = Expression::selectRaw('DATE(created_at) as date, sum(count) as total')
+            ->where('created_at', '>=', now()->subDays(6))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+
+        $expressions_previous_week = Expression::selectRaw('DATE(created_at) as date, sum(count) as total')
+            ->where('created_at', '>=', now()->subDays(14))
+            ->where('created_at', '<', now()->subDays(7))
             ->groupBy('date')
             ->orderBy('date')
             ->get();
@@ -18,25 +32,19 @@ class DashboardController extends Controller
 
         $sum_of_expressions = Expression::sum('count');
 
-        $oldest_date = $expressions->first()->date;
-        $newest_date = $expressions->last()->date;
-
-        $oldest_date = \Carbon\Carbon::parse($oldest_date);
-        $newest_date = \Carbon\Carbon::parse($newest_date);
-
-        $difference = $oldest_date->diffInDays($newest_date);
-
-        $average = $sum_of_expressions / $difference;
+        $count_pdf_created = Log::where('action', 'create_pdf')->count();
 
 
         $latest_expressions = Expression::orderBy('created_at', 'desc')->take(20)->get();
 
         return Inertia::render('Dashboard', [
-            'expressions' => $expressions,
+            'expressions' => $expressions_current_week,
+            'expressions_previous_week' => $expressions_previous_week,
             'sum_of_expressions' => $sum_of_expressions,
-            'average' => $average,
-            'difference' => $difference,
-            'latest_expressions' => $latest_expressions
+            'latest_expressions' => $latest_expressions,
+            'today_sum' => $today_sum,
+            'month_sum' => $month_sum,
+            'count_pdf_created' => $count_pdf_created
         ]);
     }
 }
