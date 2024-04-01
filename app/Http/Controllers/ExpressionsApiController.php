@@ -55,8 +55,13 @@ class ExpressionsApiController extends Controller
 
     public function getByType(Request $request)
     {
-        if (!in_array($request->type, ['Contingency', 'Contradiction', 'Tautology'])) {
+        if (!in_array($request->type, ['Contingency', 'Contradiction', 'Tautology', 'all'])) {
             return response()->json([]);
+        }
+
+        if ($request->type === 'all') {
+            $expressions = Expression::orderBy('count', 'desc')->paginate(20);
+            return response()->json($expressions);
         }
 
 
