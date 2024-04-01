@@ -8,6 +8,17 @@ import { formatNumber } from '@/Helpers/formatNumber';
 import { formatDateWithTime } from '@/Helpers/formatDateWithTime';
 
 
+const InfoCard = ({ title, value }) => {
+    return (
+        <div className='flex flex-col gap-2'>
+            <div className='text-gray-200'>{title}</div>
+            <div className='text-3xl font-bold text-white'>
+                {formatNumber(value)}
+            </div>
+        </div>
+    )
+}
+
 
 const options = {
     scales: {
@@ -19,7 +30,14 @@ const options = {
 
 
 export default function Dashboard({ auth, expressions_previous_week: expressionsPreviousWeek,
-    expressions, sum_of_expressions: sumOfExpressions, today_sum: todaySum, latest_expressions, month_sum: monthSum, count_pdf_created: countPdfCreated }) {
+    expressions, sum_of_expressions: sumOfExpressions, today_sum: todaySum, latest_expressions, month_sum: monthSum, count_pdf_created: countPdfCreated,
+    yesterday_sum: yesterdaySum,
+    last_month_sum: lastMonthSum,
+    today_pdf_created: todayPdfCreated,
+    month_pdf_created: monthPdfCreated,
+    yesterday_pdf_created: yesterdayPdfCreated,
+    last_month_pdf_created: lastMonthPdfCreated
+}) {
 
 
     const data = useMemo(() => {
@@ -53,15 +71,51 @@ export default function Dashboard({ auth, expressions_previous_week: expressions
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Dashboard</h2>}
+            header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Main page</h2>}
         >
             <Head title="Dashboard" />
 
             <div className="py-12">
+
+
+
+
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+
+                    <div className=" p-6 bg-[#5f6368] border border-gray-200 rounded-lg shadow  mb-4">
+                        <a href="#">
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
+                                Calculations
+                            </h5>
+                        </a>
+                        <div className="grid grid-cols-4 gap-2 md:grid-cols-5 sm:grid-cols-2" >
+                            <InfoCard title="Today" value={todaySum} />
+                            <InfoCard title="Yesterday" value={yesterdaySum} />
+                            <InfoCard title="This month" value={monthSum} />
+                            <InfoCard title="Last month" value={lastMonthSum} />
+                            <InfoCard title="All the time" value={sumOfExpressions} />
+                        </div>
+                    </div>
+
+                    <div className=" p-6 bg-[#5f6368] border border-gray-200 rounded-lg shadow  mb-4">
+                        <a href="#">
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
+                                PDFs created
+                            </h5>
+                        </a>
+                        <div className="grid grid-cols-4 gap-2 md:grid-cols-5 sm:grid-cols-2" >
+                            <InfoCard title="Today" value={todayPdfCreated} />
+                            <InfoCard title="Yesterday" value={yesterdayPdfCreated} />
+                            <InfoCard title="This month" value={monthPdfCreated} />
+                            <InfoCard title="Last month" value={lastMonthPdfCreated} />
+                            <InfoCard title="All the time" value={countPdfCreated} />
+                        </div>
+                    </div>
+
+
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h1 className="mb-8 text-3xl font-bold">Welcome back, {auth.user.name}!</h1>
+
 
                             <div className=" md:max-w-[70%]  mx-auto">
                                 <Line data={data} options={options} />
@@ -69,57 +123,6 @@ export default function Dashboard({ auth, expressions_previous_week: expressions
 
                         </div>
                         <hr className="my-8" />
-
-                        <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                            <div className="p-6 text-gray-900">
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                        <div className="p-6 text-gray-900">
-                                            <h3 className="mb-4 text-xl font-bold">
-                                                Total calculations
-                                            </h3>
-                                            <p className="text-4xl font-bold text-center">
-                                                {formatNumber(sumOfExpressions)}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                        <div className="p-6 text-gray-900">
-                                            <h3 className="mb-4 text-xl font-bold">
-                                                Today's calculations
-                                            </h3>
-                                            <p className="text-4xl font-bold text-center">
-                                                {formatNumber(todaySum)}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                        <div className="p-6 text-gray-900">
-                                            <h3 className="mb-4 text-xl font-bold">
-                                                This month's calculations
-                                            </h3>
-                                            <p className="text-4xl font-bold text-center">
-                                                {formatNumber(monthSum)}
-                                            </p>
-                                        </div>
-
-                                    </div>
-                                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                        <div className="p-6 text-gray-900">
-                                            <h3 className="mb-4 text-xl font-bold">
-                                                PDFs created
-                                            </h3>
-                                            <p className="text-4xl font-bold text-center">
-                                                {formatNumber(countPdfCreated)}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                        </div>
 
                         <div className="mt-8 overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900">
