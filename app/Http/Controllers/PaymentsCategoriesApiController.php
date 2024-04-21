@@ -10,14 +10,22 @@ class PaymentsCategoriesApiController extends Controller
     //List
     public function list()
     {
-        return PaymentsCategory::all();
+
+        $list = PaymentsCategory::all();
+
+        foreach ($list as $category) {
+            $category->total = $category->getTotalAttribute();
+            $category->percentage = $category->getPercentageAttribute();
+        }
+
+        return $list;
     }
 
-    //Create
     public function create(Request $request)
     {
         $request->validate([
             'name' => 'required',
+            'budget' => 'required',
             'customer_id' => 'required'
         ]);
 

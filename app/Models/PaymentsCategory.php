@@ -11,6 +11,29 @@ class PaymentsCategory extends Model
 
     protected $fillable = [
         'name',
+        'budget',
         'customer_id'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /*   public function payments()
+    {
+
+        return $this->hasMany(Payment::class, 'category_id');
+    } */
+
+
+    public function getTotalAttribute()
+    {
+        return Payment::where('category_id', $this->id)->sum('amount');
+    }
+
+    public function getPercentageAttribute()
+    {
+        return $this->budget > 0 ? $this->total * 100 / $this->budget : 0;
+    }
 }
