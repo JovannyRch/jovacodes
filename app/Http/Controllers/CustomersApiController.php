@@ -11,7 +11,7 @@ class CustomersApiController extends Controller
 
     public function list()
     {
-        return Customer::all();
+        return Customer::orderBy('name', 'asc')->get();
     }
 
     public function create(Request $request)

@@ -39,4 +39,13 @@ class PaymentsCategoriesApiController extends Controller
         $paymentsCategory->delete();
         return $paymentsCategory;
     }
+    public function details($id)
+    {
+        $category = PaymentsCategory::find($id);
+        $category->total = $category->getTotalAttribute();
+        $category->percentage = $category->getPercentageAttribute();
+        $category->payments;
+        $category->customer;
+        return $category;
+    }
 }

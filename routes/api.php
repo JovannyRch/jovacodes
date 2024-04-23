@@ -26,6 +26,8 @@ Route::delete('/customers/{id}', [CustomersApiController::class, 'destroy'])->na
 
 //Payments Categories
 Route::get('/payments_categories', [PaymentsCategoriesApiController::class, 'list'])->name('payments_categories.list');
+
+Route::get('/payments_categories/{id}/details', [PaymentsCategoriesApiController::class, 'details'])->name('payments_categories.details');
 Route::post('/payments_categories', [PaymentsCategoriesApiController::class, 'create'])->name('payments_categories.create');
 Route::delete('/payments_categories/{id}', [PaymentsCategoriesApiController::class, 'destroy'])->name('payments_categories.destroy');
 
