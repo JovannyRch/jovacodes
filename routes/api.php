@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BillCategoriesApiController;
+use App\Http\Controllers\BillPaymentsApiController;
 use App\Http\Controllers\CustomersApiController;
 use App\Http\Controllers\ExpressionsApiController;
 use App\Http\Controllers\PaymentsApiController;
@@ -44,3 +46,20 @@ Route::get('/payments/category/{category_id}', [PaymentsApiController::class, 'g
 Route::post('/payments', [PaymentsApiController::class, 'create'])->name('payments.create');
 Route::delete('/payments/{id}', [PaymentsApiController::class, 'destroy'])->name('payments.destroy');
 Route::put('/payments/{id}', [PaymentsApiController::class, 'update'])->name('payments.update');
+
+
+//Bill Categories
+Route::get('/bill_categories', [BillCategoriesApiController::class, 'list'])->name('bill_categories.list');
+Route::post('/bill_categories', [BillCategoriesApiController::class, 'create'])->name('bill_categories.create');
+Route::delete('/bill_categories/{id}', [BillCategoriesApiController::class, 'destroy'])->name('bill_categories.destroy');
+Route::put('/bill_categories/{id}', [BillCategoriesApiController::class, 'update'])->name('bill_categories.update');
+Route::get('/bill_categories/{id}/details', [BillCategoriesApiController::class, 'details'])->name('bill_categories.details');
+
+
+
+//Bills
+Route::get('/bills', [BillPaymentsApiController::class, 'list'])->name('bills.list');
+Route::get('/bills/category/{category_id}', [BillPaymentsApiController::class, 'getByCategory'])->name('bills.getByCategory');
+Route::post('/bills', [BillPaymentsApiController::class, 'create'])->name('bills.create');
+Route::delete('/bills/{id}', [BillPaymentsApiController::class, 'destroy'])->name('bills.destroy');
+Route::put('/bills/{id}', [BillPaymentsApiController::class, 'update'])->name('bills.update');
