@@ -30,4 +30,16 @@ class CustomersApiController extends Controller
         $customer->delete();
         return $customer;
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required|unique:customers,phone_number,' . $id
+        ]);
+
+        $customer = Customer::find($id);
+        $customer->update($request->all());
+        return $customer;
+    }
 }

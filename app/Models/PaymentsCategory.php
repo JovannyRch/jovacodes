@@ -23,7 +23,11 @@ class PaymentsCategory extends Model
     public function payments()
     {
 
-        return $this->hasMany(Payment::class, 'category_id');
+        $payments = $this->hasMany(Payment::class, 'category_id');
+
+        $payments->orderBy('date', 'desc');
+
+        return $payments;
     }
 
 

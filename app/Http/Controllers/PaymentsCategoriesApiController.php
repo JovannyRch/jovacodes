@@ -48,4 +48,17 @@ class PaymentsCategoriesApiController extends Controller
         $category->customer;
         return $category;
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'budget' => 'required',
+            'customer_id' => 'required'
+        ]);
+
+        $category = PaymentsCategory::find($id);
+        $category->update($request->all());
+        return $category;
+    }
 }

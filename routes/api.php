@@ -20,9 +20,14 @@ Route::get('/expressions/videos', [ExpressionsApiController::class, 'getVideos']
 Route::get('/expressions/type/{type}', [ExpressionsApiController::class, 'getByType'])->name('expression.getByType');
 Route::get('/expressions', [ExpressionsApiController::class, 'list'])->name('expression.list');
 
+
+
+//ROUTES FOR PAYMENTS APP
+
 Route::get('/customers', [CustomersApiController::class, 'list'])->name('customer.list');
 Route::post('/customers', [CustomersApiController::class, 'create'])->name('customer.create');
 Route::delete('/customers/{id}', [CustomersApiController::class, 'destroy'])->name('customer.destroy');
+Route::put('/customers/{id}', [CustomersApiController::class, 'update'])->name('customer.update');
 
 //Payments Categories
 Route::get('/payments_categories', [PaymentsCategoriesApiController::class, 'list'])->name('payments_categories.list');
@@ -30,6 +35,7 @@ Route::get('/payments_categories', [PaymentsCategoriesApiController::class, 'lis
 Route::get('/payments_categories/{id}/details', [PaymentsCategoriesApiController::class, 'details'])->name('payments_categories.details');
 Route::post('/payments_categories', [PaymentsCategoriesApiController::class, 'create'])->name('payments_categories.create');
 Route::delete('/payments_categories/{id}', [PaymentsCategoriesApiController::class, 'destroy'])->name('payments_categories.destroy');
+Route::put('/payments_categories/{id}', [PaymentsCategoriesApiController::class, 'update'])->name('payments_categories.update');
 
 
 //Payments
