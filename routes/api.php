@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BillCategoriesApiController;
 use App\Http\Controllers\BillPaymentsApiController;
+use App\Http\Controllers\CollectionCategoriesApiController;
+use App\Http\Controllers\CollectionPayments;
 use App\Http\Controllers\CustomersApiController;
 use App\Http\Controllers\ExpressionsApiController;
 use App\Http\Controllers\PaymentsApiController;
@@ -63,3 +65,19 @@ Route::get('/bills/category/{category_id}', [BillPaymentsApiController::class, '
 Route::post('/bills', [BillPaymentsApiController::class, 'create'])->name('bills.create');
 Route::delete('/bills/{id}', [BillPaymentsApiController::class, 'destroy'])->name('bills.destroy');
 Route::put('/bills/{id}', [BillPaymentsApiController::class, 'update'])->name('bills.update');
+
+
+//Collections Categories
+Route::get('/collections_categories', [CollectionCategoriesApiController::class, 'list'])->name('collections_categories.list');
+Route::post('/collections_categories', [CollectionCategoriesApiController::class, 'create'])->name('collections_categories.create');
+Route::delete('/collections_categories/{id}', [CollectionCategoriesApiController::class, 'destroy'])->name('collections_categories.destroy');
+Route::put('/collections_categories/{id}', [CollectionCategoriesApiController::class, 'update'])->name('collections_categories.update');
+Route::get('/collections_categories/{id}/details', [CollectionCategoriesApiController::class, 'details'])->name('collections_categories.details');
+
+Route::post('/collections_categories/{id}/addCustomer', [CollectionCategoriesApiController::class, 'addCustomer'])->name('collections_categories.addCustomer');
+Route::delete('/collections_categories/{id}/removeCustomer/{customer_id}', [CollectionCategoriesApiController::class, 'removeCustomer'])->name('collections_categories.removeCustomer');
+Route::get('/collections_categories/{id}/customer/{customer_id}/payments', [CollectionCategoriesApiController::class, 'getPaymentsByCustomer'])->name('collections_categories.getPaymentsByCustomer');
+
+
+Route::post('/collections_payments', [CollectionPayments::class, 'create'])->name('collections_payments.create');
+Route::delete('/collections_payments/{id}', [CollectionPayments::class, 'destroy'])->name('collections_payments.destroy');
