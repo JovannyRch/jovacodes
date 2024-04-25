@@ -91,7 +91,7 @@ class CollectionCategoriesApiController extends Controller
             return response()->json(['error' => 'Customer not in category'], 400);
         }
 
-        $payments = CollectionPayment::where('collection_id', $id)->where('customer_id', $customerId)->get();
+        $payments = CollectionPayment::where('collection_id', $id)->where('customer_id', $customerId)->orderBy('date', 'desc')->get();
 
         return $payments;
     }

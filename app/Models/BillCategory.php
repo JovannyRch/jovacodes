@@ -15,7 +15,9 @@ class BillCategory extends Model
 
     public function bills()
     {
-        return $this->hasMany(BillPayment::class, 'category_id');
+        $bills = $this->hasMany(BillPayment::class, 'category_id');
+        $bills->orderBy('date', 'desc');
+        return $bills;
     }
 
     public function getTotalAttribute()
