@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\PaymentsCategory;
 use Illuminate\Http\Request;
+use PDF;
+
 
 class PaymentsCategoriesApiController extends Controller
 {
@@ -60,5 +63,53 @@ class PaymentsCategoriesApiController extends Controller
         $category = PaymentsCategory::find($id);
         $category->update($request->all());
         return $category;
+    }
+
+    public function report($id)
+    {
+        $category = PaymentsCategory::find($id);
+        $category->total = $category->getTotalAttribute();
+        $category->percentage = $category->getPercentageAttribute();
+
+        $category->customer;
+
+        //group payments by month
+        $years = Payment::where('category_id', $id)
+            ->selectRaw('year(date) as year')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        //For each year, get the payments by month
+        $payments_by_month = [];
+        foreach ($years as $year) {
+            $months = Payment::where('category_id', $id)
+                ->selectRaw('month(date) as month')
+                ->selectRaw('sum(amount) as total')
+                ->whereRaw('year(date) = ?', [$year->year])
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get();
+
+            foreach ($months as $month) {
+                //List of payments for the month
+                $month->payments = Payment::where('category_id', $id)
+                    ->whereRaw('year(date) = ?', [$year->year])
+                    ->whereRaw('month(date) = ?', [$month->month])
+                    ->orderBy('date')
+                    ->get();
+            }
+
+            $payments_by_month[$year->year] = $months;
+        }
+
+
+        $data = [
+            'category' => $category,
+            'customer' => $category->customer,
+            'payments_by_year_by_month' => $payments_by_month
+        ];
+
+        return PDF::loadView('/reports/payments_by_category', $data)->stream();
     }
 }

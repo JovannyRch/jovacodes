@@ -41,6 +41,8 @@ Route::post('/payments_categories', [PaymentsCategoriesApiController::class, 'cr
 Route::delete('/payments_categories/{id}', [PaymentsCategoriesApiController::class, 'destroy'])->name('payments_categories.destroy');
 Route::put('/payments_categories/{id}', [PaymentsCategoriesApiController::class, 'update'])->name('payments_categories.update');
 
+Route::get('/payments_categories/{id}/report', [PaymentsCategoriesApiController::class, 'report'])->name('payments_categories.report');
+
 
 //Payments
 Route::get('/payments', [PaymentsApiController::class, 'list'])->name('payments.list');
