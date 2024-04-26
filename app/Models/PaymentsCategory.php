@@ -15,9 +15,9 @@ class PaymentsCategory extends Model
         'customer_id'
     ];
 
-    public function customers()
+    public function customer()
     {
-        return $this->belongsToMany(Customer::class, 'collection_customer', 'category_id', 'customer_id');
+        return $this->belongsTo(Customer::class);
     }
 
     public function payments()
