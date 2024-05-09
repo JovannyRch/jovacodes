@@ -59,6 +59,8 @@ Route::delete('/bill_categories/{id}', [BillCategoriesApiController::class, 'des
 Route::put('/bill_categories/{id}', [BillCategoriesApiController::class, 'update'])->name('bill_categories.update');
 Route::get('/bill_categories/{id}/details', [BillCategoriesApiController::class, 'details'])->name('bill_categories.details');
 
+Route::get('/bill_categories/{id}/report', [BillCategoriesApiController::class, 'report'])->name('bill_categories.report');
+
 
 
 //Bills

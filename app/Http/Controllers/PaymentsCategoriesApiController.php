@@ -77,7 +77,7 @@ class PaymentsCategoriesApiController extends Controller
         $years = Payment::where('category_id', $id)
             ->selectRaw('year(date) as year')
             ->groupBy('year')
-            ->orderBy('year', 'desc')
+            ->orderBy('year', 'asc')
             ->get();
 
         //For each year, get the payments by month

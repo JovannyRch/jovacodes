@@ -94,16 +94,14 @@ function formatDate($date)
 <body>
 
     <h3 class="text-center">
-        Registro de pagos
+        Registro de gastos
     </h3>
 
     <h5 style="padding: 0;  margin: 0;">
         {{ $category->name }}
     </h5>
 
-    <div class="small-text">
-        <strong>{{ $customer->name }}</strong> <br />
-    </div>
+
 
     {{-- For earch payments_by_year_by_month --}}
     @foreach ($payments_by_year_by_month as $year => $payments_by_month)
